@@ -1,0 +1,64 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:attrsample.ViewModel"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:prism="http://www.codeplex.com/prism"
+
+	  xmlns:UI="clr-namespace:attrsample.UI"
+	  
+	  x:Class="attrsample.SignupPage"
+      mc:Ignorable="d" 
+	Title="LoginPage">
+    <Page.DataContext>
+        <vm:SignupViewModel/>
+    </Page.DataContext>
+    <Page.Resources>
+        <!-- エラーメッセージをToolTipで表示するためのスタイル -->
+        <!-- by Nine worksさん http://nine-works.blog.ocn.ne.jp/blog/2012/06/wpf_2dataannota.html -->
+        <Style TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip">
+                        <Setter.Value>
+                            <Binding RelativeSource="{RelativeSource Self}"
+                                    Path="(Validation.Errors)[0].ErrorContent"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+	<i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding SignupSucceeded}">
+            <UI:NavigateToAction Source="/attrsample;component/MenuPage.xaml"/>
+        </prism:InteractionRequestTrigger>
+	</i:Interaction.Triggers>
+	<Grid>
+		<Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50px"/>
+				<RowDefinition Height="50px"/>
+				<RowDefinition Height="50px"/>
+				<RowDefinition Height="50px"/>
+				<RowDefinition/>
+				<RowDefinition Height="120px"/>
+			</Grid.RowDefinitions>
+			<TextBlock Text="ユーザー名"/>
+			<TextBox Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="160" Margin="0 16 0 10" HorizontalAlignment="Left"/>
+			<TextBlock Text="電子メールアドレス" Grid.Row="1"/>
+			<TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Margin="0 16 0 10" Grid.Row="1"/>
+			<TextBlock Text="パスワード" Grid.Row="2"/>
+			<TextBox Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Margin="0 16 0 10" Grid.Row="2"/>
+			<TextBlock Text="パスワードをもう一度入力してください。" Grid.Row="3"/>
+			<TextBox Text="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Margin="0 16 0 10" Grid.Row="3"/>
+			<Button Content="サインアップ" Command="{Binding SignupCommand}" Padding="10 5" Grid.Row="4" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+            <ListBox ItemsSource="{Binding Errors}" Grid.Row="5"/>
+		</Grid>
+	</Grid>
+</Page>

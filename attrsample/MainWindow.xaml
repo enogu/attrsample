@@ -1,0 +1,10 @@
+﻿<Window x:Class="attrsample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="clr-namespace:attrsample.UI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        Title="MainWindow" Height="420" Width="640">
+    <Grid>
+        <Frame Source="/attrsample;component/SignupPage.xaml"/>
+    </Grid>
+</Window>
